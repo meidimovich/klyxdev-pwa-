@@ -450,6 +450,12 @@ select {
   .contact-page button[type="submit"] {
     scroll-margin-block: 0.75rem calc(5.25rem + env(safe-area-inset-bottom));
   }
+
+  .contact-page input,
+  .contact-page textarea,
+  .contact-page select {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 1023px) {

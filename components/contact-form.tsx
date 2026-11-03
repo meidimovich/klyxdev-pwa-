@@ -14,21 +14,20 @@ const initialState = {
 
 export function ContactForm() {
   const { t } = useLocale();
-  const focusCheckTimers = useRef<number[]>([]);
+  const alignmentTimer = useRef<number | null>(null);
+  const alignmentFrame = useRef<number | null>(null);
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
 
-  useEffect(() => () => {
-    focusCheckTimers.current.forEach(window.clearTimeout);
-  }, []);
-
-  const handleChange = (field: keyof typeof form, value: string) => {
-    setForm((current) => ({ ...current, [field]: value }));
-  };
-
-  const keepFocusedControlVisible = (control: HTMLElement) => {
+  const keepFocusedControlVisible = () => {
     if (!window.matchMedia("(max-width: 1023px)").matches) return;
+
+    const control = document.activeElement;
+    if (!(control instanceof HTMLElement) ||
+      !control.matches(".contact-page input, .contact-page textarea, .contact-page select, .contact-page button[type='submit']")) {
+      return;
+    }
 
     const routeFrame = control.closest<HTMLElement>(".site-route-frame");
     if (!routeFrame) return;
@@ -51,6 +50,37 @@ export function ContactForm() {
     }
   };
 
+  useEffect(() => {
+    const viewport = window.visualViewport;
+
+    const scheduleFocusedControlAlignment = () => {
+      if (alignmentTimer.current !== null) {
+        window.clearTimeout(alignmentTimer.current);
+      }
+      if (alignmentFrame.current !== null) {
+        cancelAnimationFrame(alignmentFrame.current);
+      }
+
+      alignmentTimer.current = window.setTimeout(() => {
+        alignmentFrame.current = requestAnimationFrame(keepFocusedControlVisible);
+      }, 80);
+    };
+
+    viewport?.addEventListener("resize", scheduleFocusedControlAlignment);
+    viewport?.addEventListener("scroll", scheduleFocusedControlAlignment);
+
+    return () => {
+      viewport?.removeEventListener("resize", scheduleFocusedControlAlignment);
+      viewport?.removeEventListener("scroll", scheduleFocusedControlAlignment);
+      if (alignmentTimer.current !== null) window.clearTimeout(alignmentTimer.current);
+      if (alignmentFrame.current !== null) cancelAnimationFrame(alignmentFrame.current);
+    };
+  }, []);
+
+  const handleChange = (field: keyof typeof form, value: string) => {
+    setForm((current) => ({ ...current, [field]: value }));
+  };
+
   const handleFocusCapture = (event: React.FocusEvent<HTMLFormElement>) => {
     const control = event.target;
     if (!(control instanceof HTMLElement) ||
@@ -58,12 +88,11 @@ export function ContactForm() {
       return;
     }
 
-    requestAnimationFrame(() => keepFocusedControlVisible(control));
-    focusCheckTimers.current.push(
-      window.setTimeout(() => keepFocusedControlVisible(control), 100),
-      window.setTimeout(() => keepFocusedControlVisible(control), 300),
-      window.setTimeout(() => keepFocusedControlVisible(control), 600),
-    );
+    if (alignmentTimer.current !== null) window.clearTimeout(alignmentTimer.current);
+    if (alignmentFrame.current !== null) cancelAnimationFrame(alignmentFrame.current);
+    alignmentTimer.current = window.setTimeout(() => {
+      alignmentFrame.current = requestAnimationFrame(keepFocusedControlVisible);
+    }, 80);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

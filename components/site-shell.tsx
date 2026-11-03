@@ -231,19 +231,23 @@ function ShellContent({ children }: { children: React.ReactNode }) {
     const viewport = window.visualViewport;
 
     const updateKeyboardInset = () => {
-      const viewportInset = viewport && Math.abs(viewport.scale - 1) < 0.01
-        ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+      const focusedControl = document.activeElement instanceof HTMLElement
+        && document.activeElement.matches(".contact-page input, .contact-page textarea, .contact-page select");
+      const viewportInset = viewport
+        ? Math.max(0, window.innerHeight - viewport.offsetTop - viewport.height)
         : 0;
-      const keyboardInset = viewportInset >= 120 ? viewportInset : 0;
+      const keyboardInset = focusedControl && viewportInset >= 80 ? viewportInset : 0;
       root.style.setProperty("--mobile-keyboard-inset", `${keyboardInset}px`);
     };
 
+    document.addEventListener("focusin", updateKeyboardInset);
     window.addEventListener("resize", updateKeyboardInset);
     viewport?.addEventListener("resize", updateKeyboardInset);
     viewport?.addEventListener("scroll", updateKeyboardInset);
     updateKeyboardInset();
 
     return () => {
+      document.removeEventListener("focusin", updateKeyboardInset);
       window.removeEventListener("resize", updateKeyboardInset);
       viewport?.removeEventListener("resize", updateKeyboardInset);
       viewport?.removeEventListener("scroll", updateKeyboardInset);

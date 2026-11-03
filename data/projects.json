@@ -1,0 +1,202 @@
+[
+  {
+    "slug": "nova-market",
+    "name": "Nova Market",
+    "category": "PWA",
+    "short": "A premium marketplace PWA with native-like UX for mobile shoppers.",
+    "description": "We built a mobile-first commerce platform with smart product discovery, saved carts, and seamless checkout flows.",
+    "tags": [
+      "Marketplace",
+      "PWA",
+      "Commerce"
+    ],
+    "details": [
+      "Designed a premium storefront with segment-based browsing and purchase flows.",
+      "Implemented progressive web app features for installability and offline browsing.",
+      "Connected payments and inventory automation for real-time operations."
+    ],
+    "image": "/images/project-market.jpg",
+    "cover": "/images/project-market-cover.jpg",
+    "published": true,
+    "metrics": [
+      {
+        "label": "Conversion uplift",
+        "value": "+28%"
+      },
+      {
+        "label": "Time to checkout",
+        "value": "1.4x"
+      },
+      {
+        "label": "Install rate",
+        "value": "62%"
+      }
+    ],
+    "tech": [
+      "Next.js",
+      "PWA",
+      "Stripe",
+      "Supabase"
+    ]
+  },
+  {
+    "slug": "atlas-dashboard",
+    "name": "Atlas Dashboard",
+    "category": "Web Apps",
+    "short": "Internal operations platform for service teams and analytics.",
+    "description": "A custom SaaS dashboard helping operational teams manage work, budgets, and client data from one interface.",
+    "tags": [
+      "SaaS",
+      "Dashboard",
+      "Automation"
+    ],
+    "details": [
+      "Unified multiple business processes into a single operational workspace.",
+      "Created advanced filters, role access, and realtime reporting for the ops team.",
+      "Streamlined recurring tasks and reduced manual coordination by 40%."
+    ],
+    "image": "/images/project-dashboard.jpg",
+    "cover": "/images/project-dashboard-cover.jpg",
+    "published": true,
+    "metrics": [
+      {
+        "label": "Ops time saved",
+        "value": "40%"
+      },
+      {
+        "label": "Active users",
+        "value": "1.2k"
+      },
+      {
+        "label": "Faster reporting",
+        "value": "3x"
+      }
+    ],
+    "tech": [
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "Charts"
+    ]
+  },
+  {
+    "slug": "mira-campaign",
+    "name": "Mira Campaign",
+    "category": "Sites",
+    "short": "High-conversion campaign website for a growth-led product launch.",
+    "description": "Built a marketing microsite with storytelling, lead capture, and performance-focused conversion blocks.",
+    "tags": [
+      "Marketing",
+      "Campaign",
+      "Brand"
+    ],
+    "details": [
+      "Crafted a conversion-first story arc tailored to the product positioning.",
+      "Integrated lead generation form and CRM handoff flows.",
+      "Delivered a clean landing experience optimized for mobile acquisition traffic."
+    ],
+    "image": "/images/project-site.jpg",
+    "cover": "/images/project-site-cover.jpg",
+    "published": true,
+    "metrics": [
+      {
+        "label": "CTR lift",
+        "value": "+17%"
+      },
+      {
+        "label": "Leads generated",
+        "value": "480"
+      },
+      {
+        "label": "Mobile score",
+        "value": "98/100"
+      }
+    ],
+    "tech": [
+      "Next.js",
+      "Tailwind",
+      "SEO",
+      "Analytics"
+    ]
+  },
+  {
+    "slug": "luma-store",
+    "name": "Luma Store",
+    "category": "E-commerce",
+    "short": "Premium ecommerce storefront for a lifestyle brand with multiple product flows.",
+    "description": "An online store infrastructure built for brand storytelling, stable product discovery, and efficient merchandising.",
+    "tags": [
+      "E-commerce",
+      "Shopify",
+      "Brand"
+    ],
+    "details": [
+      "Built custom storefront sections, category navigation, and collections.",
+      "Optimized mobile buying experience and frictionless checkout UX.",
+      "Introduced automation for order updates, inventory signals, and campaign content."
+    ],
+    "image": "/images/project-store.jpg",
+    "cover": "/images/project-store-cover.jpg",
+    "published": true,
+    "metrics": [
+      {
+        "label": "Average order value",
+        "value": "+22%"
+      },
+      {
+        "label": "Return visitors",
+        "value": "44%"
+      },
+      {
+        "label": "Load speed",
+        "value": "1.8s"
+      }
+    ],
+    "tech": [
+      "Shopify",
+      "Hydrogen",
+      "Tailwind",
+      "Payments"
+    ]
+  },
+  {
+    "slug": "cobalt-ai",
+    "name": "Cobalt AI",
+    "category": "AI",
+    "short": "An AI-assisted business assistant with workflow automation and recommendations.",
+    "description": "We designed and launched a decision-support product that combines document analysis, summarization, and structured automation.",
+    "tags": [
+      "AI",
+      "Automation",
+      "Workflow"
+    ],
+    "details": [
+      "Created a conversational interface for operational queries and internal recommendations.",
+      "Integrated document parsing and summarization into daily workflow automation.",
+      "Enabled a better onboarding and training loop through guided AI prompts and actions."
+    ],
+    "image": "/images/project-ai.jpg",
+    "cover": "/images/project-ai-cover.jpg",
+    "published": false,
+    "metrics": [
+      {
+        "label": "Workflow saving",
+        "value": "53%"
+      },
+      {
+        "label": "Tasks automated",
+        "value": "92"
+      },
+      {
+        "label": "Decision speed",
+        "value": "5x"
+      }
+    ],
+    "tech": [
+      "OpenAI",
+      "Next.js",
+      "RAG",
+      "Automation"
+    ]
+  }
+]

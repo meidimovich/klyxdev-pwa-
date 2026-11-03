@@ -2,14 +2,21 @@
 
 import Link from "next/link";
 import {
+  ArrowUpRight,
   ArrowRight,
   Blocks,
   Code2,
   Gauge,
   Layers3,
+  Monitor,
+  Send,
+  ShoppingBag,
+  Smartphone,
+  Sparkles,
 } from "lucide-react";
 
 import { useLocale } from "@/components/locale-provider";
+import { ProjectPreview } from "@/components/project-preview";
 import { projectText } from "@/lib/i18n";
 import { services } from "@/lib/site-data";
 import { useProjects } from "@/hooks/use-projects";
@@ -27,10 +34,23 @@ const advantages = [
   { icon: Gauge, title: "home.why.delivery", text: "home.why.deliveryText" },
 ];
 
+const homeServiceKeys = ["websites", "pwa", "telegram", "ecommerce", "integrations", "ai"] as const;
+const homeServiceIcons = [Monitor, Smartphone, Send, ShoppingBag, Blocks, Sparkles] as const;
+const homeServiceIndices = [0, 1, 2, 3, 4, 5] as const;
+const homeTeamRoles = [
+  ["team.strategy", "team.role.strategy"],
+  ["team.design", "team.role.design"],
+  ["team.frontend", "team.role.frontend"],
+  ["team.backend", "team.role.backend"],
+] as const;
+
 export default function HomePage() {
   const { t, locale } = useLocale();
   const { projects } = useProjects();
   const siteContent = useSiteContent();
+  const homeServices = siteContent.services.length
+    ? siteContent.services.slice(0, homeServiceKeys.length)
+    : homeServiceIndices.map((index) => services[index]);
 
   return (
     <main className="mobile-home-main space-y-8 pb-8">
@@ -107,7 +127,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-projects mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.featured.eyebrow")}</p>
@@ -118,80 +138,66 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="mobile-project-showcase grid gap-5 lg:grid-cols-3">
           {projects.slice(0, 3).map((project) => (
-            <Link key={project.slug} href={`/projects/${project.slug}`} className="group rounded-[26px] border border-white/10 bg-[#10161c] p-4 transition hover:border-white/20 hover:bg-[#121a21]">
-              <div className="overflow-hidden rounded-[18px] border border-white/10 bg-[#0d141b]">
-                <div className="h-48 bg-[radial-gradient(circle_at_top,#364154,#171d25_40%,#0d1014)]" style={project.cover ? { backgroundImage: `linear-gradient(180deg, transparent, rgba(9,10,12,.5)), url("${project.cover}")`, backgroundPosition: "center", backgroundSize: "cover" } : undefined} />
-              </div>
+            <Link key={project.slug} href={`/projects/${project.slug}`} className="mobile-project-card group rounded-[26px] border border-white/10 bg-[#10161c] p-3 transition hover:border-white/20 hover:bg-[#121a21]">
+              <ProjectPreview category={project.category} image={project.cover || project.image} />
               <div className="mt-4 flex items-center justify-between gap-3">
-                <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-300">
+                <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-slate-300">
                   {t(project.category === "PWA" ? "category.pwa" : project.category === "Web Apps" ? "category.web" : project.category === "Sites" ? "category.sites" : project.category === "E-commerce" ? "category.commerce" : "category.ai")}
                 </span>
-                <span className="text-sm text-slate-400">→</span>
+                <span className="mobile-project-open inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-slate-300 transition group-hover:border-white/20 group-hover:text-white">
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </span>
               </div>
-              <h3 className="mt-4 text-xl font-semibold text-white">{project.content?.[locale]?.title ?? projectText(locale, project.slug, "title") ?? project.name}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">{project.content?.[locale]?.short ?? projectText(locale, project.slug, "short") ?? project.short}</p>
+              <h3 className="mt-1 text-lg font-semibold text-white">{project.content?.[locale]?.title ?? projectText(locale, project.slug, "title") ?? project.name}</h3>
+              <p className="mt-1 line-clamp-2 text-sm leading-5 text-slate-400">{project.content?.[locale]?.short ?? projectText(locale, project.slug, "short") ?? project.short}</p>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-services mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.services.eyebrow")}</p>
             <h2 className="mt-2 text-3xl font-semibold text-white">{t("home.services.title")}</h2>
           </div>
+          <Link href="/services" className="text-sm text-slate-400 transition hover:text-white">
+            <ArrowUpRight size={18} aria-hidden="true" />
+            <span className="sr-only">{t("home.featured.all")}</span>
+          </Link>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {(siteContent.services.length ? siteContent.services : services).map((service, index) => {
-            const serviceKeys = ["websites", "pwa", "telegram", "ecommerce", "integrations", "ai"] as const;
-            const serviceKey = serviceKeys[index];
-            const featureKeys = [
-              ["strategy", "landing", "cms", "seo"],
-              ["offline", "install", "ux", "notifications"],
-              ["bot", "flows", "light", "api"],
-              ["catalog", "checkout", "inventory", "crm"],
-              ["api", "automation", "reporting", "crm"],
-              ["assistant", "summaries", "automation", "reporting"],
-            ] as const;
-
-            if ("content" in service) {
-              return (
-                <div key={service.slug} className="rounded-[24px] border border-white/10 bg-[#10161c] p-5">
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#397BFF]/20 bg-[#397BFF]/10 text-[#9bb7ff]">
-                    <Blocks size={18} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white">{service.content[locale]?.title || service.slug}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-300">{service.content[locale]?.description}</p>
-                </div>
-              );
-            }
-
+        <div className="mobile-service-grid grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {homeServices.map((service, index) => {
+            const serviceKey = homeServiceKeys[index];
+            const Icon = homeServiceIcons[index];
+            const customContent = "content" in service ? service.content[locale] : null;
+            const title = customContent?.title || t(`service.${serviceKey}` as "service.websites");
+            const description = customContent?.description || (
+              "content" in service
+                ? ""
+                : t(`service.${serviceKey}.desc` as "service.websites.desc")
+            );
+            const serviceId = "content" in service ? service.slug : serviceKey;
             return (
-            <div key={service.title} className="rounded-[24px] border border-white/10 bg-[#10161c] p-5">
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#397BFF]/20 bg-[#397BFF]/10 text-[#9bb7ff]">
-                <Blocks size={18} />
-              </div>
-              <h3 className="text-xl font-semibold text-white">{t(`service.${serviceKey}` as "service.websites")}</h3>
-              <p className="mt-3 text-sm leading-6 text-slate-300">{t(`service.${serviceKey}.desc` as "service.websites.desc")}</p>
-              <ul className="mt-4 space-y-2 text-sm text-slate-200">
-                {featureKeys[index].map((feature) => (
-                  <li key={feature} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#397BFF]" />
-                    {t(`service.feature.${feature}` as "service.feature.strategy")}
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <Link key={serviceId} href={`/services#${encodeURIComponent(serviceId)}`} className="mobile-service-card group rounded-[24px] border border-white/10 bg-[#10161c] p-4 transition hover:border-white/20">
+                <span className="mobile-service-icon flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-[#c5d3f3] transition-colors group-hover:border-white/20 group-hover:bg-white/[0.08]">
+                  <Icon size={18} strokeWidth={1.7} aria-hidden="true" />
+                </span>
+                <span className="mt-4 flex items-center justify-between gap-2">
+                  <span className="text-sm font-medium text-white">{title}</span>
+                  <ArrowUpRight size={14} className="shrink-0 text-slate-500 transition group-hover:text-white" aria-hidden="true" />
+                </span>
+                <span className="mt-1.5 block line-clamp-2 text-xs leading-5 text-slate-400">{description}</span>
+              </Link>
             );
           })}
         </div>
       </section>
 
-      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-desktop-only mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.why.eyebrow")}</p>
           <h2 className="mt-2 text-3xl font-semibold text-white">{t("home.why.title")}</h2>
@@ -213,7 +219,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-desktop-only mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.process.eyebrow")}</p>
           <h2 className="mt-2 text-3xl font-semibold text-white">{t("home.process.title")}</h2>
@@ -229,7 +235,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[linear-gradient(135deg,#10161c,#0d1116)] p-6 sm:p-10">
+      <section className="mobile-home-team mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-5 sm:p-8 lg:hidden">
+        <div className="mobile-team-layout">
+          <div className="mobile-team-visual" aria-hidden="true">
+            <div className="mobile-team-orbit mobile-team-orbit-outer" />
+            <div className="mobile-team-orbit mobile-team-orbit-inner" />
+            <div className="mobile-team-monogram">K<span>·</span></div>
+            <span className="mobile-team-caption">KLYXDEV / PRODUCT STUDIO</span>
+            <span className="mobile-team-axis mobile-team-axis-one" />
+            <span className="mobile-team-axis mobile-team-axis-two" />
+          </div>
+          <div className="mobile-team-copy">
+            <p className="text-xs uppercase tracking-[0.22em] text-[#a6b8df]">{t("home.team.eyebrow")}</p>
+            <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-[-0.04em] text-white">{t("home.team.title")}</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-400">{t("home.team.description")}</p>
+            <div className="mobile-team-disciplines mt-5">
+              {homeTeamRoles.map(([name, role], index) => (
+                <div key={name} className="mobile-team-discipline">
+                  <span className="mobile-team-discipline-index">0{index + 1}</span>
+                  <span className="mobile-team-discipline-name">{t(name)}</span>
+                  <span className="mobile-team-discipline-role">{t(role)}</span>
+                </div>
+              ))}
+            </div>
+            <Link href="/about" className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-200 transition hover:text-white">
+              {t("nav.about")} <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mobile-home-cta mobile-home-secondary rounded-[32px] border border-white/10 bg-[linear-gradient(135deg,#10161c,#0d1116)] p-6 sm:p-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.cta.eyebrow")}</p>

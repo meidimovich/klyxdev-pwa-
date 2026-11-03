@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
 import { useLocale } from "@/components/locale-provider";
+import { ProjectPreview } from "@/components/project-preview";
 import { projectText } from "@/lib/i18n";
 import { useProjects } from "@/hooks/use-projects";
 
@@ -30,7 +31,7 @@ export default function ProjectsPage() {
   );
 
   return (
-    <main className="space-y-12 pb-8">
+    <main className="projects-page space-y-12 pb-8">
       <header className="grid gap-8 border-b border-white/10 pb-10 pt-5 lg:grid-cols-[1fr_0.7fr] lg:items-end">
         <div>
           <p className="text-xs uppercase tracking-[0.26em] text-[#8aa9ff]">{t("projects.eyebrow")}</p>
@@ -43,7 +44,7 @@ export default function ProjectsPage() {
         </p>
       </header>
 
-      <div className="flex flex-wrap gap-2" role="group" aria-label={t("projects.eyebrow")}>
+      <div className="projects-filters flex flex-wrap gap-2" role="group" aria-label={t("projects.eyebrow")}>
         {filters.map((filter) => (
           <button
             key={filter.key}
@@ -64,19 +65,20 @@ export default function ProjectsPage() {
       {projects.length === 0 ? (
         <p className="py-16 text-center text-sm text-slate-400">{t("projects.empty")}</p>
       ) : (
-        <section className="grid gap-x-6 gap-y-10 md:grid-cols-2">
+        <section className="projects-grid grid gap-x-6 gap-y-10 md:grid-cols-2">
           {projects.map((project, index) => (
             <Link
               key={project.slug}
               href={`/projects/${project.slug}`}
-              className="group"
+              className="project-listing group"
             >
               <div
-                className={`relative overflow-hidden border border-white/10 bg-[#11161b] ${
+                className={`project-listing-art relative h-56 overflow-hidden border border-white/10 bg-[#11161b] sm:h-72 ${
                   index % 3 === 1 ? "rounded-[1.4rem]" : "rounded-[1.4rem] sm:rounded-[2rem]"
                 }`}
               >
-                <div className={`relative flex items-end justify-between p-5 sm:p-7 ${index % 2 ? "h-64 sm:h-80" : "h-56 sm:h-72"} bg-[radial-gradient(ellipse_at_68%_22%,#364154_0%,#1b222c_34%,#101317_76%)] transition-transform duration-500 group-hover:scale-[1.015]`} style={project.cover ? { backgroundImage: `linear-gradient(180deg, transparent, rgba(9,10,12,.45)), url("${project.cover}")`, backgroundPosition: "center", backgroundSize: "cover" } : undefined}>
+                <ProjectPreview category={project.category} image={project.cover || project.image} />
+                <div className="project-listing-overlay absolute inset-0 flex items-end justify-between p-5 transition-transform duration-500 group-hover:scale-[1.015] sm:p-7">
                   <span className="text-xs uppercase tracking-[0.18em] text-white/60">
                     KLYXDEV / {String(index + 1).padStart(2, "0")}
                   </span>

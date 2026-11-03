@@ -1,13 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  Blocks,
+  Monitor,
+  Send,
+  ShoppingBag,
+  Smartphone,
+  Sparkles,
+} from "lucide-react";
 
 import { useLocale } from "@/components/locale-provider";
 import type { TranslationKey } from "@/lib/i18n";
 import { useSiteContent } from "@/hooks/use-site-content";
 
 const serviceKeys = ["websites", "pwa", "telegram", "ecommerce", "integrations", "ai"] as const;
+const serviceIcons = [Monitor, Smartphone, Send, ShoppingBag, Blocks, Sparkles] as const;
 const featureKeys = [
   ["strategy", "landing", "cms", "seo"],
   ["offline", "install", "ux", "notifications"],
@@ -22,7 +31,7 @@ export default function ServicesPage() {
   const content = useSiteContent();
 
   return (
-    <main className="space-y-12 pb-8">
+    <main className="services-page space-y-12 pb-8">
       <header className="grid gap-8 border-b border-white/10 pb-10 pt-5 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <p className="text-xs uppercase tracking-[0.26em] text-[#8aa9ff]">{t("services.eyebrow")}</p>
@@ -46,16 +55,33 @@ export default function ServicesPage() {
         </div>
       </header>
 
-      <section className="divide-y divide-white/10 border-y border-white/10">
+      <section className="services-grid divide-y divide-white/10 border-y border-white/10">
         {content.services.length ? content.services.map((service, index) => (
-          <article key={service.slug} className="grid gap-4 py-6 sm:grid-cols-[5rem_0.85fr_1.15fr] sm:gap-8 sm:py-8">
-            <span className="text-xs tracking-[0.2em] text-[#8aa9ff]">0{index + 1}</span>
+          <article id={service.slug} key={service.slug} className="service-item grid gap-4 py-6 sm:grid-cols-[5rem_0.85fr_1.15fr] sm:gap-8 sm:py-8">
+            <div className="service-item-icon">
+              <span className="service-item-index">0{index + 1}</span>
+              {(() => {
+                const Icon = serviceIcons[index % serviceIcons.length];
+                return <Icon size={20} strokeWidth={1.7} aria-hidden="true" />;
+              })()}
+            </div>
             <h2 className="text-2xl font-medium tracking-tight text-white">{service.content[locale]?.title || service.slug}</h2>
-            <p className="max-w-xl text-sm leading-7 text-slate-400">{service.content[locale]?.description}</p>
+            <div>
+              <p className="max-w-xl text-sm leading-7 text-slate-400">{service.content[locale]?.description}</p>
+              <Link href="/contact" className="service-item-cta mt-4 inline-flex items-center gap-1.5 text-sm text-slate-300 transition hover:text-white">
+                {t("nav.discuss")} <ArrowUpRight size={14} aria-hidden="true" />
+              </Link>
+            </div>
           </article>
         )) : serviceKeys.map((key, index) => (
-          <article key={key} className="grid gap-4 py-6 sm:grid-cols-[5rem_0.85fr_1.15fr] sm:gap-8 sm:py-8">
-            <span className="text-xs tracking-[0.2em] text-[#8aa9ff]">0{index + 1}</span>
+          <article id={key} key={key} className="service-item grid gap-4 py-6 sm:grid-cols-[5rem_0.85fr_1.15fr] sm:gap-8 sm:py-8">
+            <div className="service-item-icon">
+              <span className="service-item-index">0{index + 1}</span>
+              {(() => {
+                const Icon = serviceIcons[index];
+                return <Icon size={20} strokeWidth={1.7} aria-hidden="true" />;
+              })()}
+            </div>
             <h2 className="text-2xl font-medium tracking-tight text-white">
               {t(`service.${key}` as TranslationKey)}
             </h2>
@@ -70,6 +96,9 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
+              <Link href="/contact" className="service-item-cta mt-4 inline-flex items-center gap-1.5 text-sm text-slate-300 transition hover:text-white">
+                {t("nav.discuss")} <ArrowUpRight size={14} aria-hidden="true" />
+              </Link>
             </div>
           </article>
         ))}

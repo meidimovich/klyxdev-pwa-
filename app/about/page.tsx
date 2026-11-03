@@ -22,15 +22,15 @@ export default function AboutPage() {
   const content = useSiteContent();
 
   return (
-    <main className="space-y-14 pb-8">
-      <header className="max-w-4xl border-b border-white/10 pb-10 pt-5">
+    <main className="about-page space-y-14 pb-8">
+      <header className="about-heading max-w-4xl border-b border-white/10 pb-10 pt-5">
         <p className="text-xs uppercase tracking-[0.26em] text-[#8aa9ff]">{t("about.eyebrow")}</p>
         <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-6xl">
           {t("about.title")}
         </h1>
       </header>
 
-      <section className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
+      <section className="about-philosophy grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
         <h2 className="text-xs uppercase tracking-[0.22em] text-slate-500">{t("about.philosophy")}</h2>
         <div className="max-w-3xl space-y-5">
           <p className="text-xl leading-9 text-slate-200">{t("about.philosophy1")}</p>
@@ -38,7 +38,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="grid gap-8 border-y border-white/10 py-8 lg:grid-cols-[0.65fr_1.35fr]">
+      <section className="about-principles grid gap-8 border-y border-white/10 py-8 lg:grid-cols-[0.65fr_1.35fr]">
         <h2 className="text-xs uppercase tracking-[0.22em] text-slate-500">{t("about.principles")}</h2>
         <ol className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
           {principles.map((key, index) => (
@@ -50,20 +50,20 @@ export default function AboutPage() {
         </ol>
       </section>
 
-      <section>
+      <section className="about-team">
         <div className="mb-6 flex items-end justify-between border-b border-white/10 pb-4">
           <h2 className="text-xl font-medium text-white">{t("about.team")}</h2>
           <span className="text-xs text-slate-500">KLYXDEV</span>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.team.length ? content.team.map((member, index) => (
-            <article key={member.slug} className="border-t border-white/15 pt-4">
+            <article key={member.slug} className="about-team-member border-t border-white/15 pt-4">
               <p className="text-xs tracking-[0.2em] text-[#8aa9ff]">0{index + 1}</p>
               <h3 className="mt-4 text-lg font-medium text-white">{member.content[locale]?.title || member.slug}</h3>
               <p className="mt-2 text-sm text-slate-500">{member.content[locale]?.description}</p>
             </article>
           )) : team.map(([name, role], index) => (
-            <article key={name} className="border-t border-white/15 pt-4">
+            <article key={name} className="about-team-member border-t border-white/15 pt-4">
               <p className="text-xs tracking-[0.2em] text-[#8aa9ff]">0{index + 1}</p>
               <h3 className="mt-4 text-lg font-medium text-white">{t(name as TranslationKey)}</h3>
               <p className="mt-2 text-sm text-slate-500">{t(role as TranslationKey)}</p>

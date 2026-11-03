@@ -66,7 +66,23 @@ function RouteOutlet({
   const outletRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (outletRef.current) outletRef.current.scrollTop = 0;
+    const outlet = outletRef.current;
+    if (!outlet) return;
+
+    const target = window.location.hash
+      ? document.getElementById(window.location.hash.slice(1))
+      : null;
+    if (!target) {
+      outlet.scrollTop = 0;
+      return;
+    }
+
+    outlet.scrollTo({
+      top:
+        outlet.scrollTop +
+        target.getBoundingClientRect().top -
+        outlet.getBoundingClientRect().top,
+    });
   }, [pathname]);
 
   return (
@@ -84,11 +100,22 @@ function RouteOutlet({
 function MobileNavigation() {
   const pathname = usePathname();
   const { t } = useLocale();
+  const activeIndex = mobileNavItems.findIndex((item) =>
+    item.href === "/" ? pathname === "/" : pathname.startsWith(item.href),
+  );
 
   if (pathname.startsWith("/admin")) return null;
 
   return (
     <nav className="mobile-navigation" aria-label={t("nav.mobileNavigation")}>
+      <span
+        className="mobile-navigation-indicator"
+        aria-hidden="true"
+        style={{
+          transform: `translateX(${Math.max(activeIndex, 0) * 100}%)`,
+          opacity: activeIndex < 0 ? 0 : 1,
+        }}
+      />
       {mobileNavItems.map((item) => {
         const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
         const Icon = item.icon;

@@ -195,6 +195,9 @@ export default function HomePage() {
         <div className="mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.why.eyebrow")}</p>
           <h2 className="mt-2 text-3xl font-semibold text-white">{t("home.why.title")}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400 lg:hidden">
+            {t("footer.description")}
+          </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">

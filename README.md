@@ -11,7 +11,7 @@ Open [http://localhost:3000](http://localhost:3000). The site defaults to Russia
 
 ## Mobile app and PWA
 
-On mobile and in the installed app, the compact Liquid Glass bottom bar switches between Home, Projects, Services, About, and Contact as separate routes. The header stays compact with the logo and RU/EN selector; long sections scroll inside the app frame while the header and navigation remain fixed. The mobile home screen keeps the availability status, headline, short description, and two primary actions; supporting home-page sections remain available on desktop. The calculator is linked from Services.
+On mobile and in the installed app, the compact Liquid Glass bottom bar switches between Home, Projects, Services, About, and Contact as separate routes. The header stays compact with the logo and RU/EN selector; each route scrolls independently inside the app frame while the header and navigation remain fixed. The complete home page, including featured work, capabilities, team approach, process, and contact CTA, is available on mobile, followed by the shared footer. The calculator is linked from Services.
 
 On a supported mobile browser, the app offers installation when the browser signals it is available. Android opens the native install prompt; iPhone and iPad show the Safari **Share → Add to Home Screen** steps. If the prompt is dismissed, use the browser's standard install/Add to Home Screen menu. Installation is available over HTTPS (and on `localhost` during development). The service worker keeps the offline page, app icons, logo, and previously loaded Next.js static assets available; it does not cache API responses or admin pages.
 

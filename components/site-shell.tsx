@@ -226,6 +226,31 @@ function SiteFooter() {
 function ShellContent({ children }: { children: React.ReactNode }) {
   const { t } = useLocale();
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const viewport = window.visualViewport;
+
+    const updateKeyboardInset = () => {
+      const viewportInset = viewport && Math.abs(viewport.scale - 1) < 0.01
+        ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+        : 0;
+      const keyboardInset = viewportInset >= 120 ? viewportInset : 0;
+      root.style.setProperty("--mobile-keyboard-inset", `${keyboardInset}px`);
+    };
+
+    window.addEventListener("resize", updateKeyboardInset);
+    viewport?.addEventListener("resize", updateKeyboardInset);
+    viewport?.addEventListener("scroll", updateKeyboardInset);
+    updateKeyboardInset();
+
+    return () => {
+      window.removeEventListener("resize", updateKeyboardInset);
+      viewport?.removeEventListener("resize", updateKeyboardInset);
+      viewport?.removeEventListener("scroll", updateKeyboardInset);
+      root.style.removeProperty("--mobile-keyboard-inset");
+    };
+  }, []);
+
   return (
     <div className="site-shell flex min-h-screen flex-col bg-[#090A0C] text-[#F5F5F5]">
       <header className="site-header sticky top-0 z-40 border-b border-white/10 bg-[#090A0C]/90 backdrop-blur-xl">

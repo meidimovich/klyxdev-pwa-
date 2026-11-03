@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useLocale } from "@/components/locale-provider";
 
@@ -14,12 +14,56 @@ const initialState = {
 
 export function ContactForm() {
   const { t } = useLocale();
+  const focusCheckTimers = useRef<number[]>([]);
   const [form, setForm] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
 
+  useEffect(() => () => {
+    focusCheckTimers.current.forEach(window.clearTimeout);
+  }, []);
+
   const handleChange = (field: keyof typeof form, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const keepFocusedControlVisible = (control: HTMLElement) => {
+    if (!window.matchMedia("(max-width: 1023px)").matches) return;
+
+    const routeFrame = control.closest<HTMLElement>(".site-route-frame");
+    if (!routeFrame) return;
+
+    const viewport = window.visualViewport;
+    const headerBottom = document.querySelector(".site-header")?.getBoundingClientRect().bottom ?? 0;
+    const navigationTop = document.querySelector(".mobile-navigation")?.getBoundingClientRect().top
+      ?? window.innerHeight;
+    const visibleTop = Math.max(headerBottom, viewport?.offsetTop ?? 0) + 12;
+    const visibleBottom = Math.min(
+      navigationTop,
+      (viewport?.offsetTop ?? 0) + (viewport?.height ?? window.innerHeight),
+    ) - 12;
+    const bounds = control.getBoundingClientRect();
+
+    if (bounds.bottom > visibleBottom) {
+      routeFrame.scrollTop += bounds.bottom - visibleBottom;
+    } else if (bounds.top < visibleTop) {
+      routeFrame.scrollTop -= visibleTop - bounds.top;
+    }
+  };
+
+  const handleFocusCapture = (event: React.FocusEvent<HTMLFormElement>) => {
+    const control = event.target;
+    if (!(control instanceof HTMLElement) ||
+      !control.matches("input, textarea, select, button[type='submit']")) {
+      return;
+    }
+
+    requestAnimationFrame(() => keepFocusedControlVisible(control));
+    focusCheckTimers.current.push(
+      window.setTimeout(() => keepFocusedControlVisible(control), 100),
+      window.setTimeout(() => keepFocusedControlVisible(control), 300),
+      window.setTimeout(() => keepFocusedControlVisible(control), 600),
+    );
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,7 +91,11 @@ export function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 rounded-[26px] border border-white/10 bg-[#0d1015] p-6 sm:p-8">
+    <form
+      onSubmit={handleSubmit}
+      onFocusCapture={handleFocusCapture}
+      className="space-y-5 rounded-[26px] border border-white/10 bg-[#0d1015] p-6 sm:p-8"
+    >
       <div className="grid gap-5 md:grid-cols-2">
         <label className="block text-sm text-slate-300">
           <span className="mb-2.5 block">{t("form.name")}</span>

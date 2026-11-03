@@ -279,7 +279,7 @@ select {
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom) + var(--mobile-keyboard-inset, 0px));
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -352,7 +352,7 @@ select {
     position: fixed;
     z-index: 45;
     right: 0.75rem;
-    bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    bottom: calc(0.5rem + env(safe-area-inset-bottom) + var(--mobile-keyboard-inset, 0px));
     left: 0.75rem;
     display: grid;
     width: min(32rem, calc(100vw - 1.5rem));
@@ -441,7 +441,14 @@ select {
   }
 
   .mobile-install-prompt {
-    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    bottom: calc(4.5rem + env(safe-area-inset-bottom) + var(--mobile-keyboard-inset, 0px));
+  }
+
+  .contact-page input,
+  .contact-page textarea,
+  .contact-page select,
+  .contact-page button[type="submit"] {
+    scroll-margin-block: 0.75rem calc(5.25rem + env(safe-area-inset-bottom));
   }
 }
 

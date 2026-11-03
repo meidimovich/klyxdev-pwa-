@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -19,11 +19,23 @@ export const metadata: Metadata = {
   title: "KLYXDEV | Digital products, built differently",
   description: "Modern digital products, PWA apps, websites, AI workflows, and operational systems for ambitious teams.",
   metadataBase: new URL("https://klyxdev.dev"),
+  appleWebApp: {
+    capable: true,
+    title: "KLYXDEV",
+    statusBarStyle: "black-translucent",
+  },
   openGraph: {
     title: "KLYXDEV",
     description: "Digital products built differently.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#090A0C",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

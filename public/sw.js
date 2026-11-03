@@ -1,9 +1,13 @@
-const CACHE_NAME = "klyxdev-cache-v2";
+const CACHE_NAME = "klyxdev-cache-v3";
 const OFFLINE_URL = "/offline";
 const ASSETS = [
   "/offline",
-  "/icon.svg",
   "/manifest.webmanifest",
+  "/klyxdev-logo.png",
+  "/icon.png",
+  "/apple-icon.png",
+  "/pwa-192.png",
+  "/pwa-maskable-512.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -29,7 +33,27 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(event.request.url);
 
-  if (url.pathname.startsWith("/_next/") || url.pathname.startsWith("/api/")) return;
+  if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/admin")) return;
+
+  if (
+    url.pathname.startsWith("/_next/static/") &&
+    ["font", "image", "script", "style"].includes(event.request.destination)
+  ) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(async (cache) => {
+        const cached = await cache.match(event.request);
+        try {
+          const response = await fetch(event.request);
+          if (response.ok) await cache.put(event.request, response.clone());
+          return response;
+        } catch (error) {
+          if (cached) return cached;
+          throw error;
+        }
+      }),
+    );
+    return;
+  }
 
   if (event.request.mode === "navigate") {
     event.respondWith(fetch(event.request).catch(() => caches.match(OFFLINE_URL)));

@@ -42,7 +42,7 @@ export default function HomePage() {
               {t("home.availability")}
             </div>
 
-            <h1 className="max-w-xl text-5xl font-semibold tracking-[-0.06em] text-white sm:text-6xl">
+            <h1 className="max-w-xl text-4xl leading-[0.98] font-semibold tracking-[-0.06em] text-white sm:text-6xl">
               {t("home.hero.title")}<br />
               {t("home.hero.titleLine2")}
             </h1>
@@ -79,21 +79,21 @@ export default function HomePage() {
 
           <div className="relative flex items-center justify-center">
             <div className="absolute bottom-0 left-10 h-40 w-40 rounded-full bg-[#397BFF]/10 blur-3xl" />
-            <div className="relative w-full max-w-lg overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_rgba(17,22,27,0.1)_35%,_rgba(8,10,12,1)_80%)] p-4 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
-              <div className="rounded-[22px] border border-white/10 bg-[#10151b] p-4">
+            <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_rgba(17,22,27,0.1)_35%,_rgba(8,10,12,1)_80%)] p-3 shadow-[0_30px_80px_rgba(0,0,0,0.45)] lg:rounded-[28px] lg:p-4">
+              <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 lg:rounded-[22px] lg:bg-[#10151b] lg:p-4">
                 <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-slate-400">
                   <span>{t("home.concept")}</span>
                   <span>v2</span>
                 </div>
-                <div className="rounded-[22px] bg-[#0b0e12] p-5">
+                <div className="rounded-lg bg-transparent p-0 lg:rounded-[22px] lg:bg-[#0b0e12] lg:p-5">
                   <div className="flex items-center justify-between border-b border-white/10 pb-4 text-xs text-slate-400">
                     <span>KLYXDEV / STUDIO</span>
                     <span>01 — 04</span>
                   </div>
-                  <div className="grid min-h-48 grid-cols-[1fr_auto] items-end gap-4 py-6">
+                  <div className="grid min-h-24 grid-cols-[1fr_auto] items-end gap-4 py-3 lg:min-h-48 lg:py-6">
                     <div>
                       <p className="text-[10px] uppercase tracking-[0.2em] text-[#8aa9ff]">{t("home.mockup.eyebrow")}</p>
-                      <p className="mt-3 max-w-[16rem] text-2xl font-medium leading-tight tracking-tight text-white">{t("home.mockup.title")}</p>
+                      <p className="mt-3 max-w-[16rem] text-xl font-medium leading-tight tracking-tight text-white lg:text-2xl">{t("home.mockup.title")}</p>
                     </div>
                     <span className="mb-1 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-slate-300">↗</span>
                   </div>

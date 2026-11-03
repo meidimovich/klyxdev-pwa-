@@ -30,12 +30,20 @@ export default function ServicesPage() {
             {t("services.title")}
           </h1>
         </div>
-        <Link
-          href="/contact"
-          className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-white"
-        >
-          {t("services.cta")} <ArrowUpRight size={16} />
-        </Link>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <Link
+            href="/calculator"
+            className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-white"
+          >
+            {t("nav.calculator")} <ArrowUpRight size={16} />
+          </Link>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-white"
+          >
+            {t("services.cta")} <ArrowUpRight size={16} />
+          </Link>
+        </div>
       </header>
 
       <section className="divide-y divide-white/10 border-y border-white/10">

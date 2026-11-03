@@ -7,7 +7,13 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The site defaults to Russian; use RU/EN in the header or mobile menu. The selection is saved in this browser.
+Open [http://localhost:3000](http://localhost:3000). The site defaults to Russian; use RU/EN in the header. The selection is saved in this browser.
+
+## Mobile app and PWA
+
+On screens narrower than the desktop navigation, use the fixed bottom bar to switch between Home, Projects, Services, About, and Contact. The calculator is linked from Services. The screen content scrolls independently while the app navigation stays in place.
+
+On a supported mobile browser, use the install button in the header. Android opens the browser's native install prompt; iPhone and iPad show the Safari **Share → Add to Home Screen** steps. Installation is available over HTTPS (and on `localhost` during development). The service worker keeps the offline page, app icons, logo, and previously loaded Next.js static assets available; it does not cache API responses or admin pages.
 
 ## Supabase and admin access
 

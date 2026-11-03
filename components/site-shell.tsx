@@ -33,7 +33,7 @@ function LanguageSwitcher() {
 
   return (
     <div
-      className="inline-flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.03] p-1"
+      className="mobile-language-switcher inline-flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.03] p-1"
       aria-label={t("nav.language")}
     >
       {(["ru", "en"] as const).map((value) => (
@@ -42,7 +42,7 @@ function LanguageSwitcher() {
           type="button"
           onClick={() => setLocale(value)}
           aria-pressed={locale === value}
-          className={`min-w-10 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#397BFF] ${
+          className={`mobile-language-option min-w-10 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#397BFF] ${
             locale === value
               ? "bg-white text-[#090A0C]"
               : "text-slate-400 hover:text-white"
@@ -202,7 +202,7 @@ function ShellContent({ children }: { children: React.ReactNode }) {
   return (
     <div className="site-shell flex min-h-screen flex-col bg-[#090A0C] text-[#F5F5F5]">
       <header className="site-header sticky top-0 z-40 border-b border-white/10 bg-[#090A0C]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="mobile-header-content mx-auto flex max-w-7xl items-center justify-between gap-5 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             href="/"
             className="flex shrink-0 items-center gap-3"
@@ -213,7 +213,7 @@ function ShellContent({ children }: { children: React.ReactNode }) {
               width={48}
               height={48}
               unoptimized
-              className="h-12 w-12 shrink-0 object-contain"
+              className="mobile-header-logo h-12 w-12 shrink-0 object-contain"
             />
             <span className="text-sm font-semibold uppercase tracking-[0.22em] text-white">
               KLYXDEV
@@ -244,11 +244,13 @@ function ShellContent({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <PwaInstallPrompt />
             <LanguageSwitcher />
           </div>
         </div>
       </header>
+      <Suspense fallback={null}>
+        <PwaInstallPrompt />
+      </Suspense>
 
       <Suspense
         fallback={

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import { Check, Download, Plus, Share, X } from "lucide-react";
+import { Check, Plus, Share, X } from "lucide-react";
 
 import { useLocale } from "@/components/locale-provider";
 
@@ -192,22 +192,8 @@ export function PwaInstallPrompt() {
     }
   };
 
-  return (
-    <>
-      <button
-        type="button"
-        onClick={() => {
-          setInstallError(false);
-          setIsInstructionsOpen(true);
-        }}
-        aria-label={t("pwa.install.openHelp")}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-200 transition-colors hover:border-white/25 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#397BFF]"
-      >
-        <Download size={16} aria-hidden="true" />
-      </button>
-
-      {typeof document !== "undefined"
-        ? createPortal(
+  return typeof document !== "undefined"
+    ? createPortal(
             <>
               {isPromptVisible ? (
                 <aside
@@ -322,7 +308,5 @@ export function PwaInstallPrompt() {
             </>,
             document.body,
           )
-        : null}
-    </>
-  );
+    : null;
 }

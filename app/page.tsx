@@ -33,10 +33,10 @@ export default function HomePage() {
   const siteContent = useSiteContent();
 
   return (
-    <main className="space-y-8 pb-8">
-      <section className="overflow-hidden rounded-[32px] border border-white/10 bg-[#0b0d12]">
-        <div className="grid gap-8 px-5 pb-8 pt-8 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-10 lg:pb-10">
-          <div className="pt-3">
+    <main className="mobile-home-main space-y-8 pb-8">
+      <section className="mobile-home-hero overflow-hidden rounded-[32px] border border-white/10 bg-[#0b0d12]">
+        <div className="mobile-home-hero-content grid gap-8 px-5 pb-8 pt-8 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-10 lg:pb-10">
+          <div className="mobile-home-copy pt-3">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-200">
               <span className="h-2 w-2 rounded-full bg-emerald-400" />
               {t("home.availability")}
@@ -47,7 +47,7 @@ export default function HomePage() {
               {t("home.hero.titleLine2")}
             </h1>
 
-            <p className="mt-5 max-w-lg text-base leading-8 text-slate-300">
+            <p className="mobile-home-description mt-5 max-w-lg text-base leading-8 text-slate-300">
               {t("home.hero.description")}
             </p>
 
@@ -67,7 +67,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
+            <div className="mobile-home-highlights mt-10 grid max-w-xl grid-cols-3 gap-3">
               {highlights.map((item) => (
                 <div key={item.label} className="border-t border-white/15 py-3">
                   <div className="text-xs font-medium tracking-[0.18em] text-[#8aa9ff]">{item.value}</div>
@@ -77,7 +77,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative flex items-center justify-center">
+          <div className="mobile-home-concept relative flex items-center justify-center">
             <div className="absolute bottom-0 left-10 h-40 w-40 rounded-full bg-[#397BFF]/10 blur-3xl" />
             <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_rgba(17,22,27,0.1)_35%,_rgba(8,10,12,1)_80%)] p-3 shadow-[0_30px_80px_rgba(0,0,0,0.45)] lg:rounded-[28px] lg:p-4">
               <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 lg:rounded-[22px] lg:bg-[#10151b] lg:p-4">
@@ -107,7 +107,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.featured.eyebrow")}</p>
@@ -137,7 +137,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6 flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.services.eyebrow")}</p>
@@ -191,7 +191,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.why.eyebrow")}</p>
           <h2 className="mt-2 text-3xl font-semibold text-white">{t("home.why.title")}</h2>
@@ -210,7 +210,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
+      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[#0d1116] p-6 sm:p-8">
         <div className="mb-6">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.process.eyebrow")}</p>
           <h2 className="mt-2 text-3xl font-semibold text-white">{t("home.process.title")}</h2>
@@ -226,7 +226,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-[32px] border border-white/10 bg-[linear-gradient(135deg,#10161c,#0d1116)] p-6 sm:p-10">
+      <section className="mobile-home-secondary rounded-[32px] border border-white/10 bg-[linear-gradient(135deg,#10161c,#0d1116)] p-6 sm:p-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">{t("home.cta.eyebrow")}</p>
